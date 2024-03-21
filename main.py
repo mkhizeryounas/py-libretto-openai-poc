@@ -66,10 +66,9 @@ async def main():
         raise ValueError("Prompt is required")
 
     thread = openai_client.beta.threads.create()
-    message = openai_client.beta.threads.messages.create(
+    openai_client.beta.threads.messages.create(
         thread_id=thread.id, role="user", content=prompt
     )
-    logger.info("message:: %s", message)
     wait_for_run_completion(
         thread.id,
         openai_client.beta.threads.runs.create(
@@ -77,8 +76,9 @@ async def main():
         ).id,
     )
     response = get_assistant_response(thread.id)
-    logger.info("run:: %s", response)
-    libretto.send_event(prompt, response)
+    logger.info("Run response:: %s", response)
+    libretto_event = libretto.send_event(prompt, response)
+    logger.info("Libretto event:: %s", libretto_event)
 
 
 if __name__ == "__main__":
