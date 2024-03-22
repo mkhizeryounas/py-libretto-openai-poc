@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 libretto = LibrettoClient(constants.LIBRETTO_API_KEY, constants.LIBRETTO_API_NAME)
-libretto.send_event("Hello", "Hi, how are you?")
 
 openai_client = openai.Client(api_key=constants.OPENAI_API_KEY)
 
